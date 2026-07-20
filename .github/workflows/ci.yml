@@ -1,0 +1,28 @@
+name: CI
+
+# Roda em todo Pull Request e em pushes para main/develop.
+# É este check que a proteção da branch vai EXIGIR passar antes do merge.
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Checagem de tipos
+        run: npm run typecheck
+
+      - name: Rodar testes
+        run: npm test

@@ -1,0 +1,22 @@
+name: Deploy - Produção
+
+# Sempre que algo entra em `main`, publica no ambiente de PRODUÇÃO.
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # "production" é um Environment do GitHub — recomendado exigir
+    # aprovação manual aqui antes de publicar de verdade.
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Deploy de produção
+        run: bash scripts/deploy-production.sh

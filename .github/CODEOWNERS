@@ -1,0 +1,20 @@
+# ==========================================================================
+# CODEOWNERS — donos do código.
+# Um Pull Request que altere estes caminhos exige a aprovação do dono.
+# TROQUE os nomes abaixo pelos usuários reais do GitHub.
+#   @EvelynCamargoAG  -> sua conta da empresa
+#   @OUTRO-USUARIO    -> conta do dono / colega
+# ==========================================================================
+
+# Regra geral (fallback): tudo exige revisão
+*                       @EvelynCamargoAG @OUTRO-USUARIO
+
+# Código da aplicação
+/src/                   @EvelynCamargoAG
+
+# Banco de dados / migrations — mudança sensível, as duas revisam
+/supabase/              @EvelynCamargoAG @OUTRO-USUARIO
+
+# Fluxo de trabalho, CI/CD e deploy — as duas revisam
+/.github/               @EvelynCamargoAG @OUTRO-USUARIO
+/scripts/               @EvelynCamargoAG @OUTRO-USUARIO

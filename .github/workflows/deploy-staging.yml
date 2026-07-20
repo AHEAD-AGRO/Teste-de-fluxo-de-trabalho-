@@ -1,0 +1,22 @@
+name: Deploy - Teste (staging)
+
+# Sempre que algo entra em `develop`, publica no ambiente de TESTE.
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # "staging" é um Environment do GitHub — dá pra exigir aprovação e
+    # guardar as chaves do Supabase de teste como secrets deste ambiente.
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Deploy de teste
+        run: bash scripts/deploy-staging.sh
