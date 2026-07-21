@@ -97,6 +97,24 @@ button:hover {
   cursor: pointer;
 }
 
+#task-list li span {
+  flex: 1;
+}
+
+#task-list li button.delete {
+  padding: 0.2rem 0.4rem;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1;
+  opacity: 0.45;
+}
+
+#task-list li button.delete:hover {
+  background: #fdecea;
+  opacity: 1;
+}
+
 #task-list li.empty {
   justify-content: center;
   color: #9aa8a1;

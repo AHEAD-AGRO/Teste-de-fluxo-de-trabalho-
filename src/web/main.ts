@@ -52,11 +52,30 @@ function desenhar(tarefas: Task[]): void {
     const texto = document.createElement('span');
     texto.textContent = tarefa.title;
 
-    li.append(checkbox, texto);
+    const excluirBtn = document.createElement('button');
+    excluirBtn.type = 'button';
+    excluirBtn.className = 'delete';
+    excluirBtn.textContent = '🗑️';
+    excluirBtn.title = 'Excluir tarefa';
+    excluirBtn.addEventListener('click', () => excluir(tarefa));
+
+    li.append(checkbox, texto, excluirBtn);
     list.appendChild(li);
   }
 
   status.textContent = `${tarefas.length} tarefa(s)`;
+}
+
+/** Exclui uma tarefa do banco (com confirmação). */
+async function excluir(tarefa: Task): Promise<void> {
+  if (!confirm(`Excluir a tarefa "${tarefa.title}"?`)) return;
+
+  const { error } = await supabase.from('tasks').delete().eq('id', tarefa.id);
+  if (error) {
+    status.textContent = `Erro ao excluir: ${error.message}`;
+    return;
+  }
+  carregar();
 }
 
 /** Marca/desmarca uma tarefa como concluída. */
