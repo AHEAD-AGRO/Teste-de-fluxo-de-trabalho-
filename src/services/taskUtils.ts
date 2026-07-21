@@ -29,3 +29,8 @@ export function summarize(tasks: Task[]): { total: number; done: number; pending
   const done = tasks.filter((t) => t.done).length;
   return { total: tasks.length, done, pending: tasks.length - done };
 }
+
+/** [Renan] Retorna só as tarefas pendentes (não concluídas). */
+export function filterPending(tasks: Task[]): Task[] {
+  return tasks.filter((t) => !t.done);
+}
