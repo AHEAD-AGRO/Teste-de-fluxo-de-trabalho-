@@ -1,0 +1,111 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #1a7f5a, #10603f);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  color: #1a2b22;
+}
+
+.card {
+  background: #fff;
+  width: 100%;
+  max-width: 440px;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+h1 {
+  font-size: 1.6rem;
+}
+
+.sub {
+  color: #6b7a72;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+#new-task-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+#task-title {
+  flex: 1;
+  padding: 0.7rem 0.9rem;
+  border: 2px solid #dfe6e2;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+}
+
+#task-title:focus {
+  border-color: #1a7f5a;
+}
+
+button {
+  padding: 0.7rem 1.1rem;
+  background: #1a7f5a;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #156647;
+}
+
+#task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+#task-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 0.8rem;
+  background: #f5f8f6;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+#task-list li.done span {
+  text-decoration: line-through;
+  color: #9aa8a1;
+}
+
+#task-list li input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: #1a7f5a;
+  cursor: pointer;
+}
+
+#task-list li.empty {
+  justify-content: center;
+  color: #9aa8a1;
+  background: transparent;
+}
+
+.status {
+  margin-top: 1.25rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #6b7a72;
+}
