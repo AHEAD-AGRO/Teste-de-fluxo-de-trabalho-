@@ -127,3 +127,50 @@ button:hover {
   font-size: 0.85rem;
   color: #6b7a72;
 }
+
+/* Barra de ferramentas: % concluído + botão de filtro */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+#progress-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a7f5a;
+}
+
+#toggle-pending {
+  padding: 0.4rem 0.7rem;
+  font-size: 0.8rem;
+  background: #eef4f1;
+  color: #1a7f5a;
+}
+
+#toggle-pending:hover {
+  background: #dfeae5;
+}
+
+#toggle-pending.active {
+  background: #1a7f5a;
+  color: #fff;
+}
+
+/* Barra de progresso (usa a função percentDone) */
+#progress-bar {
+  height: 8px;
+  background: #eef1ef;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+
+#progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #1a7f5a;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}

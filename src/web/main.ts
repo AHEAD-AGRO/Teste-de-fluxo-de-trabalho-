@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { percentDone, filterPending } from '../services/taskUtils';
 
 // Conexão com o Supabase (usa as variáveis VITE_ do arquivo .env).
 // A chave "publishable" pode ficar no navegador — é pública por natureza.
@@ -18,25 +19,49 @@ const form = document.querySelector<HTMLFormElement>('#new-task-form')!;
 const input = document.querySelector<HTMLInputElement>('#task-title')!;
 const list = document.querySelector<HTMLUListElement>('#task-list')!;
 const status = document.querySelector<HTMLParagraphElement>('#status')!;
+const progressLabel = document.querySelector<HTMLSpanElement>('#progress-label')!;
+const progressFill = document.querySelector<HTMLDivElement>('#progress-fill')!;
+const toggleBtn = document.querySelector<HTMLButtonElement>('#toggle-pending')!;
 
-/** Busca as tarefas no banco e desenha na tela. */
+// Estado da tela
+let todasTarefas: Task[] = [];
+let soPendentes = false;
+
+/** Busca as tarefas no banco e redesenha a tela. */
 async function carregar(): Promise<void> {
   const { data, error } = await supabase.from('tasks').select('*').order('id');
   if (error) {
     status.textContent = `Erro ao carregar: ${error.message}`;
     return;
   }
-  desenhar((data ?? []) as Task[]);
+  todasTarefas = (data ?? []) as Task[];
+  renderizar();
 }
 
-/** Monta a lista visual a partir das tarefas. */
+/** Atualiza tudo na tela: barra de progresso + lista (com ou sem filtro). */
+function renderizar(): void {
+  // [Evelyn] percentDone: porcentagem concluída
+  const pct = percentDone(todasTarefas);
+  progressLabel.textContent = `${pct}% concluído`;
+  progressFill.style.width = `${pct}%`;
+
+  // [Renan] filterPending: quando o filtro está ligado, mostra só pendentes
+  const visiveis = soPendentes ? (filterPending(todasTarefas) as Task[]) : todasTarefas;
+  desenhar(visiveis);
+
+  status.textContent = `${visiveis.length} de ${todasTarefas.length} tarefa(s)`;
+}
+
+/** Monta a lista visual a partir das tarefas recebidas. */
 function desenhar(tarefas: Task[]): void {
   list.innerHTML = '';
 
   if (tarefas.length === 0) {
     const vazio = document.createElement('li');
     vazio.className = 'empty';
-    vazio.textContent = 'Nenhuma tarefa ainda. Adicione a primeira! 👆';
+    vazio.textContent = soPendentes
+      ? 'Nenhuma tarefa pendente. 🎉'
+      : 'Nenhuma tarefa ainda. Adicione a primeira! 👆';
     list.appendChild(vazio);
   }
 
@@ -62,8 +87,6 @@ function desenhar(tarefas: Task[]): void {
     li.append(checkbox, texto, excluirBtn);
     list.appendChild(li);
   }
-
-  status.textContent = `${tarefas.length} tarefa(s)`;
 }
 
 /** Exclui uma tarefa do banco (com confirmação). */
@@ -83,6 +106,14 @@ async function alternar(tarefa: Task): Promise<void> {
   await supabase.from('tasks').update({ done: !tarefa.done }).eq('id', tarefa.id);
   carregar();
 }
+
+// Botão: alternar entre "todas" e "só pendentes"
+toggleBtn.addEventListener('click', () => {
+  soPendentes = !soPendentes;
+  toggleBtn.textContent = soPendentes ? 'Mostrar todas' : 'Mostrar só pendentes';
+  toggleBtn.classList.toggle('active', soPendentes);
+  renderizar();
+});
 
 // Adicionar nova tarefa
 form.addEventListener('submit', async (evento) => {
