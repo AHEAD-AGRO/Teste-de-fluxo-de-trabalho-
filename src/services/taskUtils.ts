@@ -17,6 +17,13 @@ export function normalizeTitle(title: string): string {
   return title.trim().replace(/\s+/g, ' ');
 }
 
+/** [Evelyn] Retorna a porcentagem de tarefas concluídas (0 a 100). */
+export function percentDone(tasks: Task[]): number {
+  if (tasks.length === 0) return 0;
+  const done = tasks.filter((t) => t.done).length;
+  return Math.round((done / tasks.length) * 100);
+}
+
 /** Conta quantas tarefas estão concluídas e quantas estão pendentes. */
 export function summarize(tasks: Task[]): { total: number; done: number; pending: number } {
   const done = tasks.filter((t) => t.done).length;
