@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "description": "Laboratório para validar o fluxo de trabalho compartilhado (merges, ambientes de teste/produção) usando Supabase como backend simulado.",
   "scripts": {
     "dev": "vite",
